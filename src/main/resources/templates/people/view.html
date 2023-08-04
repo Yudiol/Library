@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View</title>
+</head>
+<body>
+<label for="name">Full name of reader : </label>
+<span id="name" th:text="${person.getSurname() + ' ' + person.getName()}"></span>
+</br>
+<label for="year">Year of the reader's birth : </label>
+<span id="year" th:text="${person.getBirthday()}"></span>
+</br>
+<label for="time">Registration time : </label>
+<span id="time" th:text="${person.getRegistrationTime()}"></span>
+
+<div th:if="${books}">
+    <p>Books :</p>
+    <div th:each="book : ${books}">
+        <a th:href="@{/books/{id}(id=${book.getId()})}"
+           th:style="${book.getExpired()} ? 'color:red' : 'color:black'"
+           th:text="${book.getName() +  ' ' + book.getAuthor() + ' ' + book.getYearOfProduction()}"></a>
+    </div>
+</div>
+
+<div th:if="${books==null}">
+    <p>Person don't have books</p>
+</div>
+
+<hr/>
+<form th:action="@{/people/{id}/edit/(id=${person.getId()})}" th:method="GET">
+    <input type="submit" value="Edit"/>
+</form>
+<form th:action="@{/people/{id}(id=${person.getId()})}" th:method="DELETE">
+    <input type="submit" value="Delete"/>
+</form>
+<button onclick="window.history.back()" type="button">Cancel</button>
+<form th:action="@{/people}" th:method="GET">
+    <input type="submit" value="List of people">
+</form>
+</body>
+</html>

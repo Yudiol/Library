@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <meta charset="UTF-8">
+    <title>Main page</title>
+</head>
+<body style="padding: 30px">
+
+<!--<form th:method="GET" th:action="@{/books/find}">-->
+<!--    <div class="input-group mb-3">-->
+<!--        <input type="text" class="form-control" placeholder="Enter the name of book" name="name"/>-->
+<!--        <input type="text" class="form-control" placeholder="Enter the author of book" name="author"/>-->
+<!--        <input class="btn btn-outline-secondary" type="submit" id="button-addon2" value="Find book"/>-->
+<!--    </div>-->
+<!--</form>-->
+
+<br>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Author
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Edit
+            </th>
+            <th>
+                Delete
+            </th>
+
+        </tr>
+        <div th:each="book : ${books}">
+            <tr>
+                <td>
+                    <a th:href="@{/books/{id}(id=${book.getId()})}"
+                       th:text="${book.getName()}"></a>
+                </td>
+                <td>
+                    <a th:href="@{/books/author/{author}(author=${book.getAuthor()})}"
+                       th:text="${book.getAuthor()}"></a>
+                </td>
+                <td>
+                    <div th:if="${book.getReader()!=null}">
+                        <span style="color:red">Occupied by : </span>
+                        <a th:href="@{/people/{id}(id=${book.getReader().getId()})}"
+                           th:text="${book.getReader().getSurname() + ' ' + book.getReader().getSurname()}"></a>
+                    </div>
+                    <div th:if="${book.getReader()==null}">
+
+                        <div style="color:green">Free</div>
+                    </div>
+                </td>
+                <td>
+                    <a class="btn btn-info" role="button" th:href="@{/books/{id}/edit(id=${book.getId()})}">Edit</a>
+                </td>
+                <td>
+                    <form th:action="@{/books/{id}(id=${book.getId()})}" th:method="DELETE">
+                        <input class="btn btn-info" type="submit" value="Delete"/>
+                    </form>
+                </td>
+            </tr>
+
+        </div>
+    </table>
+</div>
+<ul class="pagination justify-content-center" th:if="${size>1}">
+    <li th:hidden="${page == 0}" class="page-item"><a
+            th:href="@{'/books/search?name=' + ${ name } + '&author=' + ${ author } + '&page='+ ${ page - 1}}"
+            class="page-link">Previous</a>
+    </li>
+    <li th:hidden="${page + 1 <= 3}" class="page-item "><a
+            th:href="@{'books/search?name=' + ${ name } + '&author=' + ${ author } + '&page=' + ${page - 3}}"
+            class="page-link"
+            th:text="${page - 2}"></a></li>
+    <li th:hidden="${page + 1 <= 2}" class="page-item "><a
+            th:href="@{'books/search?name=' + ${ name } + '&author=' + ${ author } + '&page=' + ${page - 2}}"
+            class="page-link"
+            th:text="${page - 1}"></a></li>
+    <li th:hidden="${page == 0}" class="page-item "><a
+            th:href="@{'books/search?name=' + ${ name } + '&author=' + ${ author } + '&page=' + ${page - 1}}"
+            class="page-link"
+            th:text="${page}"></a></li>
+    <li class="page-item  active"><a
+            th:href="@{'books/search?name=' + ${ name } + '&author=' + ${ author } + '&page='+${page}}"
+            class="page-link"
+            th:text="${page + 1}"></a>
+    </li>
+    <li th:hidden="${page + 1 >= size}" class="page-item "><a
+            th:href="@{'books/search?name=' + ${ name } + '&author=' + ${ author } + '&page='+ ${page + 1}}"
+            class="page-link"
+            th:text="${page + 2}"></a></li>
+    <li th:hidden="${page + 2 >= size}" class="page-item "><a
+            th:href="@{'books/search?name=' + ${ name } + '&author=' + ${ author } + '&page=' + ${page + 2}}"
+            class="page-link"
+            th:text="${page + 3}"></a></li>
+    <li th:hidden="${page + 3 >= size}" class="page-item "><a
+            th:href="@{'books/search?name=' + ${ name } + '&author=' + ${ author } + '&page=' + ${page + 3}}"
+            class="page-link"
+            th:text="${page + 4}"></a></li>
+    <li th:hidden="${page + 1 >= size}" class="page-item"><a
+            th:href="@{'/books/search?name=' + ${ name } + '&author=' + ${ author } + '&page=' + ${page + 1}}"
+            class="page-link">Next</a></li>
+</ul>
+<br/>
+<form th:action="@{/books/new}" th:method="GET" th:object="${book}">
+    <input type="submit" value="Add Book"/>
+</form>
+<form th:action="@{/}" th:method="GET">
+    <input type="submit" value="Menu">
+</form>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New person</title>
+</head>
+<body>
+<form th:action="@{/people/{id}(id=${person.getId()})}" th:method="PATCH" th:object="${person}">
+    <label for="name"> Enter name : </label>
+    <input type="text" id="name" th:field="*{name}"/>
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+    <br/>
+    <label for="surname"> Enter surname : </label>
+    <input type="text" id="surname" th:field="*{surname}"/>
+    <div style="color:red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
+    <br/>
+    <label for="email"> Enter email : </label>
+    <input type="text" id="email" th:field="*{email}"/>
+    <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+    <br/>
+    <label for="birthday"> Enter age : </label>
+    <input type="date" id="birthday" th:field="*{birthday}"/>
+    <div style="color:red" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></div>
+    <br/>
+    <input type="submit" value="Create person">
+</form>
+
+</body>
+</html>

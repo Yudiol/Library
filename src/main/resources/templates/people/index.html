@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+</head>
+<body style="padding: 30px">
+<form th:method="GET" th:action="@{/people/search}">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Enter the name of person" name="name"/>
+        <input type="text" class="form-control" placeholder="Enter the surname of person" name="surname"/>
+        <input class="btn btn-outline-secondary" type="submit" id="button-addon2" value="Find person"/>
+    </div>
+</form>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>
+                Surname
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Year of the reader's birth
+            </th>
+            <th>
+                Registration date
+            </th>
+            <th>
+                Edit
+            </th>
+            <th>
+                Delete
+            </th>
+        </thead>
+        <tbody>
+        </tr>
+        <div th:each="person : ${people}">
+            <tr>
+                <td>
+                    <a th:href="@{/people/{id}(id=${person.getId()})}"
+                       th:text="${person.getSurname()}"></a>
+                </td>
+                <td>
+                    <a th:href="@{/people/{id}(id=${person.getId()})}"
+                       th:text="${ person.getName()}"></a>
+                </td>
+                <td>
+                    <p th:text="${person.getBirthday()}"></p>
+                </td>
+                <td>
+                    <p th:text="${person.getRegistrationTime()}"></p>
+                </td>
+                <td>
+                    <a class="btn btn-info" role="button" th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit</a>
+                </td>
+                <td>
+                    <form th:action="@{/people/{id}(id=${person.getId()})}" th:method="Delete">
+                        <input class="btn btn-info" type="submit" value="Delete"/>
+                    </form>
+                </td>
+            </tr>
+        </div>
+        </tbody>
+    </table>
+</div>
+
+<ul class="pagination justify-content-center" th:if="${size>1}">
+    <li th:hidden="${page == 0}" class="page-item"><a th:href="@{'/people?page='+ ${ page - 1}}" class="page-link">Previous</a>
+    </li>
+    <li th:hidden="${page + 1 <= 3}" class="page-item "><a th:href="@{'/people?page=' + ${page - 3}}" class="page-link"
+                                                           th:text="${page - 2}"></a></li>
+    <li th:hidden="${page + 1 <= 2}" class="page-item "><a th:href="@{'/people?page=' + ${page - 2}}" class="page-link"
+                                                           th:text="${page - 1}"></a></li>
+    <li th:hidden="${page == 0}" class="page-item "><a th:href="@{'/people?page=' + ${page - 1}}" class="page-link"
+                                                       th:text="${page}"></a></li>
+    <li class="page-item  active"><a th:href="@{'/people?page='+${page}}" class="page-link" th:text="${page + 1}"></a>
+    </li>
+    <li th:hidden="${page + 1 >= size}" class="page-item "><a th:href="@{'/people?page='+ ${page + 1}}"
+                                                              class="page-link"
+                                                              th:text="${page + 2}"></a></li>
+    <li th:hidden="${page + 2 >= size}" class="page-item "><a th:href="@{'/people?page=' + ${page + 2}}"
+                                                              class="page-link" th:text="${page + 3}"></a></li>
+    <li th:hidden="${page + 3 >= size}" class="page-item "><a th:href="@{'/people?page=' + ${page + 3}}"
+                                                              class="page-link" th:text="${page + 4}"></a></li>
+    <li th:hidden="${page + 1 >= size}" class="page-item"><a th:href="@{'/people?page=' + ${page + 1}}"
+                                                             class="page-link">Next</a></li>
+</ul>
+
+<br/>
+<form th:action="@{/people/new}" th:method="GET" th:object="${person}">
+    <input type="submit" value="Add person"/>
+</form>
+
+<form th:action="@{/}" th:method="GET">
+    <input type="submit" value="Menu">
+</form>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+</html>
