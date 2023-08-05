@@ -1,8 +1,8 @@
-package com.yudin.spring.services;
+package com.yudin.librarygit.services;
 
-import com.yudin.spring.models.Book;
-import com.yudin.spring.models.Person;
-import com.yudin.spring.repositories.BooksRepository;
+import com.yudin.librarygit.models.Book;
+import com.yudin.librarygit.models.Reader;
+import com.yudin.librarygit.repositories.BooksRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -49,21 +49,20 @@ public class BookService {
     public void release(int id) {
         Optional<Book> optionalBook = booksRepository.findById(id);
         if (optionalBook.isPresent()) {
-            Person person = optionalBook.get().getReader();
+            Reader person = optionalBook.get().getReader();
             person.getBookList().remove(optionalBook.get());
             optionalBook.get().setReader(null);
         }
     }
 
     @Transactional
-    public void assign(int id, Person person) {
+    public void assign(int id, Reader person) {
         Book book = booksRepository.findById(id).orElse(null);
         book.setReader(person);
         book.setDateOfAppointment(new Date());
     }
 
     public Page<Book> find(String name, String author, PageRequest pageRequest) {
-//        return booksRepository.findByNameLikeAndAuthorLike(name, author, pageRequest);
         return booksRepository.searchByNameLikeAndAuthorLike(name, author, pageRequest);
 
     }
@@ -72,7 +71,7 @@ public class BookService {
         return booksRepository.findByAuthor(author, pageRequest);
     }
 
-    public List<Book> findByReader(Person person) {
+    public List<Book> findByReader(Reader person) {
         return booksRepository.findByReader(person).orElse(null);
     }
 

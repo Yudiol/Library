@@ -1,10 +1,11 @@
-package com.yudin.spring.controllers;
+package com.yudin.librarygit.controllers;
 
-import com.yudin.spring.models.Book;
-import com.yudin.spring.models.Person;
-import com.yudin.spring.services.BookService;
-import com.yudin.spring.services.PeopleService;
-import com.yudin.spring.util.BooksValidator;
+import com.yudin.librarygit.models.Book;
+import com.yudin.librarygit.models.Reader;
+import com.yudin.librarygit.services.BookService;
+import com.yudin.librarygit.services.PeopleService;
+import com.yudin.librarygit.util.BooksValidator;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,8 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/books")
@@ -40,7 +39,7 @@ public class BookController {
         model.addAttribute("book", book);
         if (book.getReader() == null) {
             model.addAttribute("people", peopleService.findAll());
-            model.addAttribute("person", new Person());
+            model.addAttribute("person", new Reader());
         } else {
             model.addAttribute("owner", book.getReader());
         }
@@ -118,9 +117,8 @@ public class BookController {
     }
 
     @PatchMapping("/{id}/assign")
-    public String assign(@PathVariable("id") int id, @ModelAttribute("person") Person person) {
+    public String assign(@PathVariable("id") int id, @ModelAttribute("person") Reader person) {
         bookService.assign(id, person);
         return "redirect:/books/" + id;
     }
-
 }

@@ -1,2 +1,5 @@
-package com.yudin.librarygit.models;public enum Status {
+package com.yudin.librarygit.models;
+
+public enum Status {
+    ACTIVE, BANNED;
 }

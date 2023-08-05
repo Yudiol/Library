@@ -2,16 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Login</title>
 </head>
 <body>
-
-<form th:action="@{/process_login}" th:method="POST" >
-<!--    <input type="hidden" th:name="${_csrf.getParameterName()}" th:value="${_csrf.getToken()}">-->
-    <label for="username">Enter name : </label>
+<form th:action="@{/process_login}" th:method="POST">
+    <input type="hidden" th:name="${_csrf.getParameterName()}" th:value="${_csrf.getToken()}">
+    <label for="username">Enter Email : </label>
     <input type="text" name="username" id="username"/>
     <br/>
-    <label for="password">Enter password : </label>
+    <label for="password">Enter Password : </label>
     <input type="text" name="password" id="password"/>
     <div style="color:red" th:if="${param.error}">
         The name or password is incorrect!
@@ -20,14 +19,6 @@
     <br/>
     <input type="submit" value="Log in"/>
 </form>
-
 <br/>
-
-<form th:action="@{/auth/registration}" th:method="GET">
-    <input type="submit" value="Registration">
-</form>
-
-<!--<a th:href="@{auth/registration}">Registration</a>-->
-
 </body>
 </html>

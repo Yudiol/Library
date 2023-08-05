@@ -5,14 +5,16 @@
     <title>Title</title>
 </head>
 <body>
-<form th:action="@{/auth/registration}" th:method="POST" th:object="${person}">
+<form th:action="@{/registration}" th:method="POST" th:object="${librarian}">
+
     <label for="username">Enter name : </label>
     <input type="text" th:field="*{username}" id="username"/>
     <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
     <br/>
-    <label for="year">Enter year of birth : </label>
-    <input type="text" th:field="*{yearOfBirth}" id="year"/>
-    <div style="color:red" th:if="${#fields.hasErrors('yearOfBirth')}" th:errors="*{yearOfBirth}"></div>
+    <label for="year">Enter year of email : </label>
+    <input type="text" th:field="*{email}" id="year"/>
+    <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+
     <br/> <label for="password">Enter password : </label>
     <input type="text" th:field="*{password}" id="password"/>
     <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>

@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <title>Main page</title>
@@ -8,6 +11,15 @@
 
 </head>
 <body style="padding: 30px">
+
+<div sec:authorize="hasAuthority('WRITE')">
+    <a class="btn btn-info" role="button"  th:href="@{/librarians}" >Librarians</a>
+</div>
+
+<form class="col  d-flex justify-content-end align-items-start" th:action="@{/logout}" th:method="POST">
+    <input class="btn btn-primary" type="submit" value="EXIT">
+</form>
+<br/>
 <form th:method="GET" th:action="@{/people/search}">
     <div class="input-group mb-3">
         <input type="text" class="form-control" placeholder="Enter the name of person" name="name"/>
@@ -94,7 +106,7 @@
 
 <br/>
 <form th:action="@{/people/new}" th:method="GET" th:object="${person}">
-    <input type="submit" value="Add person"/>
+    <input type="submit" value="Add reader"/>
 </form>
 
 <form th:action="@{/}" th:method="GET">

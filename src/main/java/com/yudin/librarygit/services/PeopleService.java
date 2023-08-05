@@ -1,7 +1,7 @@
-package com.yudin.spring.services;
+package com.yudin.librarygit.services;
 
-import com.yudin.spring.models.Person;
-import com.yudin.spring.repositories.PeopleRepository;
+import com.yudin.librarygit.models.Reader;
+import com.yudin.librarygit.repositories.PeopleRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -20,29 +20,24 @@ public class PeopleService {
         this.peopleRepository = peopleRepository;
     }
 
-    //    public Page<Person> findAllByPageRequest(PageRequest pageRequest) {
-//        return peopleRepository.findAllByPageRequest(pageRequest);
-//    }
-    public Page<Person> find(String name, String surname, PageRequest pageRequest) {
-//        return booksRepository.findByNameLikeAndAuthorLike(name, author, pageRequest);
+    public Page<Reader> find(String name, String surname, PageRequest pageRequest) {
         return peopleRepository.searchByNameLikeAndSurnameLike(name, surname, pageRequest);
-
     }
 
-    public Page<Person> findAllByPageRequest(PageRequest pageRequest) {
+    public Page<Reader> findAllByPageRequest(PageRequest pageRequest) {
         return peopleRepository.findAll(pageRequest);
     }
 
-    public List<Person> findAll() {
+    public List<Reader> findAll() {
         return peopleRepository.findAll();
     }
 
-    public Person findOne(int id) {
+    public Reader findOne(int id) {
         return peopleRepository.findById(id).orElse(null);
     }
 
     @Transactional
-    public void update(int id, Person person) {
+    public void update(int id, Reader person) {
         person.setId(id);
         peopleRepository.save(person);
     }
@@ -53,14 +48,12 @@ public class PeopleService {
     }
 
     @Transactional
-    public void save(Person person) {
+    public void save(Reader person) {
         person.setRegistrationTime(new Date());
         peopleRepository.save(person);
     }
 
-    public Optional<Person> findByEmail(String email) {
+    public Optional<Reader> findByEmail(String email) {
         return peopleRepository.findByEmail(email);
     }
-
-
 }

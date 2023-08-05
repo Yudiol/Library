@@ -1,7 +1,7 @@
-package com.yudin.spring.util;
+package com.yudin.librarygit.util;
 
-import com.yudin.spring.models.Book;
-import com.yudin.spring.services.BookService;
+import com.yudin.librarygit.models.Book;
+import com.yudin.librarygit.services.BookService;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -30,7 +30,5 @@ public class BooksValidator implements Validator {
                 && newBook.getYearOfProduction() == takenFromTable.get().getYearOfProduction()) {
             errors.rejectValue("name", "", "This book already exist");
         }
-
-
     }
 }

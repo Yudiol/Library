@@ -1,11 +1,11 @@
-package com.yudin.spring.models;
+package com.yudin.librarygit.models;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -44,7 +44,7 @@ public class Book {
 
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
-    private Person reader;
+    private Reader reader;
 
     @Transient
     private boolean expired;
