@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<form th:action="@{/registration}" th:method="POST" th:object="${librarian}">
+<form th:action="@{/librarians/registration}" th:method="POST" th:object="${librarian}">
 
     <label for="username">Enter name : </label>
     <input type="text" th:field="*{username}" id="username"/>

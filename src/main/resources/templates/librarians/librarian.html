@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<!--<html xmlns="http://www.w3.org/1999/xhtml"-->
-<!--      xmlns:th="http://www.thymeleaf.org"-->
-<!--      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">-->
 <head>
     <meta charset="UTF-8">
     <title>Admin page</title>
@@ -12,22 +9,12 @@
 </head>
 <body style="padding: 30px">
 
-<!--<div sec:authorize="hasAuthority('WRITE')">-->
-<!--    <a class="btn btn-info" role="button" th:href="@{/registration}">add librarian</a>-->
-<!--</div>-->
-
 <form class="col  d-flex justify-content-end align-items-start" th:action="@{/logout}" th:method="POST">
     <input class="btn btn-primary" type="submit" value="EXIT">
 </form>
 
 <br/>
-<!--<form th:method="GET" th:action="@{/people/search}">-->
-<!--    <div class="input-group mb-3">-->
-<!--        <input type="text" class="form-control" placeholder="Enter the name of person" name="name"/>-->
-<!--        <input type="text" class="form-control" placeholder="Enter the surname of person" name="surname"/>-->
-<!--        <input class="btn btn-outline-secondary" type="submit" id="button-addon2" value="Find person"/>-->
-<!--    </div>-->
-<!--</form>-->
+
 <div class="table-responsive">
     <table class="table table-striped">
         <thead>
@@ -42,31 +29,44 @@
                 Admin
             </th>
             <th>
-                Status
+                Active
+            </th>
+            <th>
+                Save
+            </th>
+            <th>
+                Delete
             </th>
         </thead>
         <tbody>
         </tr>
         <div th:each="librarian : ${librarians}">
             <tr>
+                <form th:action="@{/librarians/{id}(id=${librarian.getId()})}" th:method="POST"
+                      th:object="${librarian}">
+                    <td>
+                        <span th:text="${librarian.getUsername()}"/>
+                    </td>
+                    <td>
+                        <span th:text="${librarian.getEmail()}" name="email"/>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="checkRole"
+                               th:checked="${librarian.getRole().toString()}=='ADMIN'"/>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="checkStatus"
+                               th:checked="${librarian.getStatus().toString()}=='ACTIVE'"/>
+                    </td>
+
+                    <td>
+                        <input type="submit" value="Save"/>
+                    </td>
+                </form>
                 <td>
-                    <span th:text="${librarian.getUsername()}"></span>
-<!--                    <span th:text="${librarian.getUsername()}"></span>-->
-<!--                    <a th:href="@{/people/{id}(id=${person.getId()})}"-->
-<!--                       th:text="${person.getSurname()}"></a>-->
-                </td>
-                <td>
-                    <span th:text="${librarian.getEmail()}"></span>
-<!--                    <a th:href="@{/people/{id}(id=${person.getId()})}"-->
-<!--                       th:text="${ person.getName()}"></a>-->
-                </td>
-                <td>
-                    <span th:text="${librarian.getRole()}"></span>
-<!--                    <p th:text="${person.getBirthday()}"></p>-->
-                </td>
-                <td>
-                    <span th:text="${librarian.getStatus()}"></span>
-<!--                    <p th:text="${person.getRegistrationTime()}"></p>-->
+                    <form th:action="@{/librarians/{id}(id=${librarian.getId()})}" th:method="DELETE">
+                        <input type="submit" value="Delete"/>
+                    </form>
                 </td>
 
             </tr>
@@ -74,31 +74,8 @@
         </tbody>
     </table>
 </div>
-
-<!--<ul class="pagination justify-content-center" th:if="${size>1}">-->
-<!--    <li th:hidden="${page == 0}" class="page-item"><a th:href="@{'/people?page='+ ${ page - 1}}" class="page-link">Previous</a>-->
-<!--    </li>-->
-<!--    <li th:hidden="${page + 1 <= 3}" class="page-item "><a th:href="@{'/people?page=' + ${page - 3}}" class="page-link"-->
-<!--                                                           th:text="${page - 2}"></a></li>-->
-<!--    <li th:hidden="${page + 1 <= 2}" class="page-item "><a th:href="@{'/people?page=' + ${page - 2}}" class="page-link"-->
-<!--                                                           th:text="${page - 1}"></a></li>-->
-<!--    <li th:hidden="${page == 0}" class="page-item "><a th:href="@{'/people?page=' + ${page - 1}}" class="page-link"-->
-<!--                                                       th:text="${page}"></a></li>-->
-<!--    <li class="page-item  active"><a th:href="@{'/people?page='+${page}}" class="page-link" th:text="${page + 1}"></a>-->
-<!--    </li>-->
-<!--    <li th:hidden="${page + 1 >= size}" class="page-item "><a th:href="@{'/people?page='+ ${page + 1}}"-->
-<!--                                                              class="page-link"-->
-<!--                                                              th:text="${page + 2}"></a></li>-->
-<!--    <li th:hidden="${page + 2 >= size}" class="page-item "><a th:href="@{'/people?page=' + ${page + 2}}"-->
-<!--                                                              class="page-link" th:text="${page + 3}"></a></li>-->
-<!--    <li th:hidden="${page + 3 >= size}" class="page-item "><a th:href="@{'/people?page=' + ${page + 3}}"-->
-<!--                                                              class="page-link" th:text="${page + 4}"></a></li>-->
-<!--    <li th:hidden="${page + 1 >= size}" class="page-item"><a th:href="@{'/people?page=' + ${page + 1}}"-->
-<!--                                                             class="page-link">Next</a></li>-->
-<!--</ul>-->
-
 <br/>
-<form th:action="@{/registration}" th:method="GET" th:object="${librarians}">
+<form th:action="@{/librarians/registration}" th:method="GET" th:object="${librarians}">
     <input type="submit" value="Add librarian"/>
 </form>
 
