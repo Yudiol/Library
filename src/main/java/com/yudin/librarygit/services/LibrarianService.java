@@ -7,20 +7,24 @@ import com.yudin.librarygit.repositories.LibrarianRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class LibrarianService {
 
 
     private final LibrarianRepository librarianRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     public void save(Librarian librarian) {
         librarian.setRole(Role.USER);
         librarian.setStatus(Status.ACTIVE);
@@ -33,6 +37,7 @@ public class LibrarianService {
                 .sorted(Comparator.comparing(Librarian::getUsername)).collect(Collectors.toList());
     }
 
+    @Transactional
     public void update(int id, String checkRole, String checkStatus) {
         Librarian librarian = librarianRepository.findById(id).orElse(null);
         if (Objects.equals(checkStatus, "on")) {
@@ -47,7 +52,13 @@ public class LibrarianService {
         }
         librarianRepository.save(librarian);
     }
-    public void delete(int id){
+
+    @Transactional
+    public void delete(int id) {
         librarianRepository.deleteById(id);
+    }
+
+    public Optional<Librarian> findByEmail(String email) {
+        return librarianRepository.findByEmail(email);
     }
 }

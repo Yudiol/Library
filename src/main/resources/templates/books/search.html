@@ -52,7 +52,7 @@
                     <div th:if="${book.getReader()!=null}">
                         <span style="color:red">Occupied by : </span>
                         <a th:href="@{/people/{id}(id=${book.getReader().getId()})}"
-                           th:text="${book.getReader().getSurname() + ' ' + book.getReader().getSurname()}"></a>
+                           th:text="${book.getReader().getName() + ' ' + book.getReader().getSurname()}"></a>
                     </div>
                     <div th:if="${book.getReader()==null}">
 

@@ -8,7 +8,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class LibraryGitApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(LibraryGitApplication.class, args);
     }

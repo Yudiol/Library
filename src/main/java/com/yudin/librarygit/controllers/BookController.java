@@ -25,7 +25,7 @@ public class BookController {
 
     @GetMapping
     public String index(Model model, @RequestParam(required = false, defaultValue = "0") int page,
-                        @RequestParam(required = false, defaultValue = "5") int size) {
+                        @RequestParam(required = false, defaultValue = "10") int size) {
         Page<Book> listBook = bookService.findAll(PageRequest.of(page, size, Sort.by("name")));
         model.addAttribute("books", listBook);
         model.addAttribute("page", page);

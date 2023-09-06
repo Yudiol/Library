@@ -28,7 +28,7 @@
 </div>
 
 <hr/>
-<form th:action="@{/people/{id}/edit/(id=${person.getId()})}" th:method="GET">
+<form th:action="@{/people/{id}/edit(id=${person.getId()})}" th:method="GET">
     <input type="submit" value="Edit"/>
 </form>
 <form th:action="@{/people/{id}(id=${person.getId()})}" th:method="DELETE">

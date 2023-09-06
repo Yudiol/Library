@@ -2,6 +2,7 @@ package com.yudin.librarygit.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 @Entity
@@ -17,26 +18,27 @@ public class Librarian {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "username")
     @NonNull
+    @Column(name = "username")
     private String username;
 
-    @Column(name = "password")
     @NonNull
+    @Column(name = "password")
     private String password;
 
-    @Email
-    @Column(name = "email")
     @NonNull
+    @Email
+    @NotEmpty(message = "Email should not be empty")
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "role")
     @NonNull
+    @Column(name = "role")
     @Enumerated(EnumType.ORDINAL)
     private Role role;
 
-    @Column(name = "status")
     @NonNull
+    @Column(name = "status")
     @Enumerated(EnumType.ORDINAL)
     private Status status;
 }
